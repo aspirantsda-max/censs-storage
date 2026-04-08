@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CENSS Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {margin:0;font-family:Segoe UI;background:#0f172a;color:white;}
+.login {height:100vh;display:flex;justify-content:center;align-items:center;}
+.box {background:#1e293b;padding:30px;border-radius:15px;text-align:center;}
+button {margin:5px;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;}
+input {padding:8px;border-radius:5px;border:none;}
+</style>
+</head>
+
+<body>
+
+<div class="login">
+<div class="box">
+<h2>🚀 CENSS Dashboard</h2>
+
+<input id="username" placeholder="Username"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+</div>
+</div>
+
+<script>
+
+// 🔥 CHANGE THIS AFTER DEPLOY
+const API = "https://YOUR_RENDER_URL.onrender.com";
+
+function login(){
+    fetch(API + "/login", {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            username:document.getElementById("username").value,
+            password:document.getElementById("password").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            alert("Login Success ✅");
+        } else {
+            document.getElementById("msg").innerText = "Invalid login ❌";
+        }
+    })
+    .catch(err => {
+        document.getElementById("msg").innerText = "Server error ⚠️";
+        console.error(err);
+    });
+}
+
+</script>
+
+</body>
+</html>
